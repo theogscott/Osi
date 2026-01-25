@@ -19,3 +19,14 @@ autom4te.cache
 **/MSVisualStudio/**/*.mps
 **/MSVisualStudio/**/*.lp
 **/MSVisualStudio/**/*.out
+
+# Apple, Xcode, Swift Package Manager (SPM) 
+.DS_Store
+/.build
+/Packages
+xcuserdata/
+DerivedData/
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
+
