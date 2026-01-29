@@ -28,7 +28,7 @@ let package = Package(
         .library(
             name: "Osi",
             type: .static, // static because of sandboxing.
-            targets: ["libOsi"]
+            targets: ["Osi"]
         ),
     ],
     
@@ -36,8 +36,12 @@ let package = Package(
     // -----------------------------------------------------------------
     // 3. Depependent on others - none at the moment
     // -----------------------------------------------------------------
-    dependencies: [],
-    
+    dependencies: [.package(
+        url: "https://github.com/theogscott/CoinUtils",
+        branch: "SPM"           // for a rolling dev branch
+        ),
+    ],
+
     // MARK: – Targets (the actual code and test suite)
     // --------------------------------------------------------------------
     // 4. Targets – split into a C++ library and a C and/or Swift wrapper
@@ -50,23 +54,25 @@ let package = Package(
         // 4a C++ target (only .cpp/.hpp files)
         // ------------------------------------------------------------
         .target(
-            name: "libOsi",  // internal name – can be anything
-            dependencies: [],         // No external modules
-            path: "src", // folder that holds the C++ files
+            name: "Osi",  // internal name – can be anything
+            dependencies: [.product(name: "libCoinUtils", package: "CoinUtils")],     // The CoinUtils package exports a library product named “CoinUtils”. This line tells SwiftPM to link against that product.
+            path: "src",    // The folder containing the C++ source files
             sources: [  // The C++ files to be included in the build
-                "OsiAuxInfo.cpp",
-                "OsiBranchingObject.cpp",
-                "OsiChooseVariable.cpp",
-                "OsiColCut.cpp",
-                "OsiCut.cpp",
-                "OsiCuts.cpp",
-                "OsiFeatures.cpp",
-                "OsiNames.cpp",
-                "OsiPresolve.cpp",
-                "OsiRowCut.cpp",
-                "OsiRowCutDebugger.cpp",
-                "OsiSolverBranch.cpp",
-                "OsiSolverInterface.cpp"
+                "Osi/OsiAuxInfo.cpp",
+                "Osi/OsiBranchingObject.cpp",
+                "Osi/OsiChooseVariable.cpp",
+                "Osi/OsiColCut.cpp",
+                "Osi/OsiCut.cpp",
+                "Osi/OsiCuts.cpp",
+                "Osi/OsiFeatures.cpp",
+                "Osi/OsiCollections.cpp",
+                "Osi/OsiNames.cpp",
+                "Osi/OsiPresolve.cpp",
+                "Osi/OsiRowCut.cpp",
+                "Osi/OsiRowCutDebugger.cpp",
+                "Osi/OsiSolverBranch.cpp",
+                "Osi/OsiSolverInterface.cpp",
+                "Osi/OsiSolverParameters.cpp"
             ],
             
             // ---- Public headers --------------------------------------------------------------

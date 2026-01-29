@@ -1,9 +1,4 @@
 
-/* include the COIN-OR-wide system specific configure header */
-#include "configall_system.h"
-
-/* include the public project specific macros */
-#include "config_osi_default.h"
 
 /***************************************************************************/
 /*             HERE DEFINE THE PROJECT SPECIFIC MACROS                     */
@@ -38,3 +33,4 @@
 
 /* Define to 1 if the Xpress package is used */
 /* #define COIN_HAS_XPR 1 */
+
