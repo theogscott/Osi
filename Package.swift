@@ -57,7 +57,6 @@ let package = Package(
             name: "libOsi",  // internal name – can be anything
             dependencies: [.product(name: "libCoinUtils", package: "CoinUtils")],     // The CoinUtils package exports a library product named “CoinUtils”. This line tells SwiftPM to link against that product.
             path: "src/Osi",    // The folder containing the C++ source files
-            // We list all files, ands thosse headers that must part of the library, are commented  out.
             
             
             // ---- Public headers --------------------------------------------------------------
@@ -70,7 +69,7 @@ let package = Package(
                 // Use the C++20 (or C++23) dialect – change if you need a different version.
                 //.cxxStandard("c++20"), // use user default, aka Xcode version
                 
-                .define("OSICLPLIB_BUILD", to: "1"),
+                .define("OSILIB_BUILD", to: "1"),
                 .define("_LIB", to: "1"),
                 
                 
