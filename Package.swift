@@ -26,9 +26,9 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Osi",
+            name: "libOsi",
             type: .static, // static because of sandboxing.
-            targets: ["Osi"]
+            targets: ["libOsi"]
         ),
     ],
     
@@ -54,38 +54,25 @@ let package = Package(
         // 4a C++ target (only .cpp/.hpp files)
         // ------------------------------------------------------------
         .target(
-            name: "Osi",  // internal name – can be anything
+            name: "libOsi",  // internal name – can be anything
             dependencies: [.product(name: "libCoinUtils", package: "CoinUtils")],     // The CoinUtils package exports a library product named “CoinUtils”. This line tells SwiftPM to link against that product.
-            path: "src",    // The folder containing the C++ source files
-            sources: [  // The C++ files to be included in the build
-                "Osi/OsiAuxInfo.cpp",
-                "Osi/OsiBranchingObject.cpp",
-                "Osi/OsiChooseVariable.cpp",
-                "Osi/OsiColCut.cpp",
-                "Osi/OsiCut.cpp",
-                "Osi/OsiCuts.cpp",
-                "Osi/OsiFeatures.cpp",
-                "Osi/OsiCollections.cpp",
-                "Osi/OsiNames.cpp",
-                "Osi/OsiPresolve.cpp",
-                "Osi/OsiRowCut.cpp",
-                "Osi/OsiRowCutDebugger.cpp",
-                "Osi/OsiSolverBranch.cpp",
-                "Osi/OsiSolverInterface.cpp",
-                "Osi/OsiSolverParameters.cpp"
-            ],
+            path: "src/Osi",    // The folder containing the C++ source files
+            // We list all files, ands thosse headers that must part of the library, are commented  out.
+            
             
             // ---- Public headers --------------------------------------------------------------
             // Anything under `publicHeadersPath` becomes visible to *other* packages.
             // It also tells SPM where to look for the headers when it builds a Clang module.
-            publicHeadersPath: ".",          // Anything inside src that ends with .h/.hpp becomes a public Clang module
+            publicHeadersPath: ".",          // Anything inside src/Osi that ends with .h/.hpp becomes a public Clang module
             
             // ---- C++‑specific settings --------------------------------------------------------
             cxxSettings: [
                 // Use the C++20 (or C++23) dialect – change if you need a different version.
                 //.cxxStandard("c++20"), // use user default, aka Xcode version
                 
-                .define("OSILIB_BUILD", to: "1"),
+                .define("OSICLPLIB_BUILD", to: "1"),
+                .define("_LIB", to: "1"),
+                
                 
                 // Tell the compiler where to find your headers from path sources
                 .headerSearchPath(".")
@@ -100,7 +87,7 @@ let package = Package(
         //        ,
         //        .testTarget(
         //            name: "",
-        //            dependencies: ["CoinUtils"] // Tests depends/run on the lib we testing
+        //            dependencies: ["libOsi"] // Tests depends/run on the lib we testing
         //        ),
         
     ]
