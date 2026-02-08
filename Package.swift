@@ -76,18 +76,31 @@ let package = Package(
                 // Tell the compiler where to find your headers from path sources
                 .headerSearchPath(".")
             ]
-        )
+        ),
         
         // MARK: - Tests
         // -----------------------------------------------------------------
-        //  TODO: To add once we have a sucessfull build
-        //  Keeping below as template
         // -----------------------------------------------------------------
-        //        ,
-        //        .testTarget(
-        //            name: "",
-        //            dependencies: ["libOsi"] // Tests depends/run on the lib we testing
-        //        ),
+        .target(
+            name: "libOsiCommonTest",
+            dependencies: [
+                "libOsi",
+                .product(name: "libCoinUtils", package: "CoinUtils")
+            ],
+            path: "src/OsiCommonTest",
+            publicHeadersPath: ".",
+            cxxSettings: [
+                // Use the C++20 (or C++23) dialect – change if you need a different version.
+                //.cxxStandard("c++20"), // use user default, aka Xcode version
+                
+                .define("OSILIB_BUILD", to: "1"),
+                .define("_LIB", to: "1"),
+                
+                
+                // Tell the compiler where to find your headers from path sources
+                .headerSearchPath(".")
+            ]
+        ),
         
     ]
 )
