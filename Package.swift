@@ -30,6 +30,10 @@ let package = Package(
             type: .static, // static because of sandboxing.
             targets: ["libOsi"]
         ),
+        .library(
+            name: "libOsiCommonTest",
+            type: .static,
+            targets: ["libOsiCommonTest"])
     ],
     
     // MARK: - Dependencies
@@ -88,6 +92,7 @@ let package = Package(
                 .product(name: "libCoinUtils", package: "CoinUtils")
             ],
             path: "src/OsiCommonTest",
+            
             publicHeadersPath: ".",
             cxxSettings: [
                 // Use the C++20 (or C++23) dialect – change if you need a different version.
