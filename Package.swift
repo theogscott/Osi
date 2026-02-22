@@ -100,6 +100,7 @@ let package = Package(
                 
                 .define("OSILIB_BUILD", to: "1"),
                 .define("_LIB", to: "1"),
+                .define("COIN_XCODE", to: "1"),
                 
                 
                 // Tell the compiler where to find your headers from path sources

@@ -374,6 +374,9 @@ bool processParameters(int argc, const char **argv, std::map< std::string, std::
 #ifdef COIN_MSVS
   // Visual Studio builds are deeper
   pathTmp = "..\\..\\" + pathTmp;
+#elif COIN_XCODE
+      // Xcode supports and implements sanboxing, so it can't access files outside the scope of the application without explicit permissions from user. 
+    pathTmp = "Resources/Data/";
 #endif
 
   parms["-mpsDir"] = pathTmp + "Sample";
