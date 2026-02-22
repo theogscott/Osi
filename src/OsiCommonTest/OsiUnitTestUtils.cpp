@@ -376,7 +376,7 @@ bool processParameters(int argc, const char **argv, std::map< std::string, std::
   pathTmp = "..\\..\\" + pathTmp;
 #elif COIN_XCODE
       // Xcode supports and implements sanboxing, so it can't access files outside the scope of the application without explicit permissions from user. 
-    pathTmp = "Resources/Data/";
+    pathTmp = "./Data/";
 #endif
 
   parms["-mpsDir"] = pathTmp + "Sample";
