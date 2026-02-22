@@ -375,8 +375,11 @@ bool processParameters(int argc, const char **argv, std::map< std::string, std::
   // Visual Studio builds are deeper
   pathTmp = "..\\..\\" + pathTmp;
 #elif COIN_XCODE
-      // Xcode supports and implements sanboxing, so it can't access files outside the scope of the application without explicit permissions from user. 
-    pathTmp = "./Data/";
+      /// Xcode supports and implements sanboxing, so it can't access files outside the scope of the application without explicit permissions from user. The preference would have been the have ./Data Prefic for xcode, that is possible if either all the data is merged into a single repo, or more complicated code is required to handle a ./Data to be shared among bundles in the sandbox while keeping seperate repos. The data would stored:
+    /// dirSample = "./Sample/";
+    /// dirNetlib = "./Netlib/";
+    /// dirMiplib = "./miplib3/";
+    pathTmp = "./";
 #endif
 
   parms["-mpsDir"] = pathTmp + "Sample";
