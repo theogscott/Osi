@@ -1753,6 +1753,18 @@ public:
   /// Return number of entries in U part of current factorization
   virtual CoinBigIndex getSizeU() const;
 #endif
+
+  /** Tighten variable bounds using singleton rows.
+      For each row with exactly one nonzero coefficient a*x, the row bounds
+      rl <= a*x <= ru imply bounds on x that may be tighter than the current
+      column bounds.
+
+      Returns the number of bound changes applied, or -1 if the implied bounds
+      are infeasible (i.e. some variable's implied lower bound exceeds its
+      implied upper bound). On output, nFixed reports how many variables
+      became newly fixed (only meaningful when return value >= 0). */
+  int tightenBoundsFromSingletonRows(int &nFixed);
+
   //@}
 
   //---------------------------------------------------------------------------
@@ -1825,6 +1837,11 @@ public:
   inline bool defaultHandler() const
   {
     return defaultHandler_;
+  }
+  /// Set default handler flag (used to prevent handler override in initialSolve)
+  inline void setDefaultHandler(bool yesNo)
+  {
+    defaultHandler_ = yesNo;
   }
   //@}
   //---------------------------------------------------------------------------
@@ -1909,6 +1926,11 @@ public:
    */
   void checkCGraph(CoinMessageHandler *msgh = NULL);
 
+  /*! \brief Returns the time (in CPU seconds) spent building the conflict graph */
+  inline double getCGraphBuildTime() const { return cgraphBuildTime_; }
+
+  /*! \brief Returns the density of the conflict graph (0..1) */
+  inline double getCGraphDensity() const { return cgraphDensity_; }
 
   //@}
 
@@ -2306,6 +2328,12 @@ private:
   //@}
 
   CoinStaticConflictGraph *cgraph_;
+
+  /// Time (CPU seconds) spent building the conflict graph
+  double cgraphBuildTime_;
+
+  /// Density of the conflict graph
+  double cgraphDensity_;
 };
 
 //#############################################################################
